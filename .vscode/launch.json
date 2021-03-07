@@ -23,7 +23,7 @@
             "request": "launch",
             "mainClass": "sample.WordCounter",
             "projectName": "assignment1_CSCI2020U_d12b627",
-            "args": ["data", "output.txt"]
+            "args": ["data/train/ham","data/train/ham2", "outputHam.txt", "data/train/spam","outputSpam.txt"]
         }
     ]
 }

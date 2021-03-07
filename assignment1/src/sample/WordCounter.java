@@ -6,6 +6,7 @@ import java.util.*;
 public class WordCounter{
 	
 	private Map<String, Integer> wordCounts;
+	List<String> arr = new ArrayList<>(); 
 	
 	public WordCounter(){
 		wordCounts = new TreeMap<>();
@@ -13,12 +14,13 @@ public class WordCounter{
 	
 	public void parseFile(File file) throws IOException{
 		System.out.println("Starting parsing the file:" + file.getAbsolutePath());
+		arr.clear();
 		
 		if(file.isDirectory()){
 			//parse each file inside the directory
 			File[] content = file.listFiles();
-			for(int i = 0; i < content.length; i++){ //updated so array of content files is iterated through, while incrementing to next file.
-				parseFile(content[i]);
+			for(File current: content){
+				parseFile(current);
 			}
 		}else{
 			Scanner scanner = new Scanner(file);
@@ -41,19 +43,29 @@ public class WordCounter{
 	}
 	
 	private void countWord(String word){
+		if (arr.contains(word))
+		{
+			return;
+		}
 		if(wordCounts.containsKey(word)){
 			int previous = wordCounts.get(word);
 			wordCounts.put(word, previous+1);
+			arr.add(word);
 		}else{
 			wordCounts.put(word, 1);
+			arr.add(word);
 		}
 	}
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
 		System.out.println("Saving word counts to file:" + output.getAbsolutePath());
-		//  Removed total word count, since we need how many files have that word.
+		System.out.println("Total words:" + wordCounts.keySet().size());
+		System.out.println(arr);
 		
-		if (!output.exists() || output.canWrite()) { // changed conditional so that we dont need to create a new file when output exists.
+		if (!output.exists()){
+			output.createNewFile();
+		}
+		if (output.canWrite()){
 				PrintWriter fileOutput = new PrintWriter(output);
 				
 				Set<String> keys = wordCounts.keySet();
@@ -69,10 +81,7 @@ public class WordCounter{
 				}
 				
 				fileOutput.close();
-
-		} else  {
-			System.out.println("Error: the output file already exists: ");
-		}
+			}
 		
 	}
 	
@@ -84,15 +93,43 @@ public class WordCounter{
 			System.exit(0);
 		}
 		
-		File dataDir = new File(args[0]);
-		// removed second file object
+		File dataDirHam1 = new File(args[0]);
+		File dataDirHam2 = new File(args[1]);
+		File outFileHam = new File(args[2]);
+		File dataDirSpam = new File(args[3]);
+		File outFileSpam = new File(args[4]);		
+		
 		WordCounter wordCounter = new WordCounter();
-		System.out.println("File: " + dataDir);
+		System.out.println("Hello");
 		try{
-			wordCounter.parseFile(dataDir);
-			wordCounter.outputWordCount(2, new File(args[1])); //outputs for dataDir
+			wordCounter.parseFile(dataDirHam1);
+			wordCounter.outputWordCount(2, outFileHam);
 		}catch(FileNotFoundException e){
-			System.err.println("Invalid input dir: " + dataDir.getAbsolutePath());
+			System.err.println("Invalid input dir: " + dataDirHam1.getAbsolutePath());
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+		WordCounter wordCounter2 = new WordCounter();
+		System.out.println("Hello");
+		try{
+			wordCounter2.parseFile(dataDirHam2);
+			wordCounter2.outputWordCount(2, outFileHam);
+		}catch(FileNotFoundException e){
+			System.err.println("Invalid input dir: " + dataDirHam2.getAbsolutePath());
+			e.printStackTrace();
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+
+		WordCounter wordCounter3 = new WordCounter();
+		System.out.println("Hello");
+		try{
+			wordCounter3.parseFile(dataDirSpam);
+			wordCounter3.outputWordCount(2, outFileSpam);
+		}catch(FileNotFoundException e){
+			System.err.println("Invalid input dir: " + dataDirSpam.getAbsolutePath());
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
