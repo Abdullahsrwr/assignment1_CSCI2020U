@@ -6,15 +6,17 @@ import java.util.*;
 public class WordCounter{
 	
 	private Map<String, Integer> wordCounts;
-	List<String> arr = new ArrayList<>(); 
+	List<String> arr = new ArrayList<>();
+	int totalFiles = 0; 
 	
 	public WordCounter(){
 		wordCounts = new TreeMap<>();
 	}
 	
 	public void parseFile(File file) throws IOException{
-		System.out.println("Starting parsing the file:" + file.getAbsolutePath());
+		//System.out.println("Starting parsing the file:" + file.getAbsolutePath());
 		arr.clear();
+		totalFiles++;
 		
 		if(file.isDirectory()){
 			//parse each file inside the directory
@@ -58,9 +60,8 @@ public class WordCounter{
 	}
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
-		System.out.println("Saving word counts to file:" + output.getAbsolutePath());
-		System.out.println("Total words:" + wordCounts.keySet().size());
-		System.out.println(arr);
+		System.out.println("Saving file to word occurrance counts to file:" + output.getAbsolutePath());
+		System.out.println("Total files:" + totalFiles);
 		
 		if (!output.exists()){
 			output.createNewFile();
@@ -112,7 +113,6 @@ public class WordCounter{
 		}
 
 		WordCounter wordCounter2 = new WordCounter();
-		System.out.println("Hello");
 		try{
 			wordCounter2.parseFile(dataDirHam2);
 			wordCounter2.outputWordCount(2, outFileHam);
@@ -124,7 +124,6 @@ public class WordCounter{
 		}
 
 		WordCounter wordCounter3 = new WordCounter();
-		System.out.println("Hello");
 		try{
 			wordCounter3.parseFile(dataDirSpam);
 			wordCounter3.outputWordCount(2, outFileSpam);
