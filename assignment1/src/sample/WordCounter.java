@@ -17,14 +17,14 @@ public class WordCounter{
 		if(file.isDirectory()){
 			//parse each file inside the directory
 			File[] content = file.listFiles();
-			for(File current: content){
-				parseFile(current);
+			for(int i = 0; i < content.length; i++){ //updated so array of content files is iterated through, while incrementing to next file.
+				parseFile(content[i]);
 			}
 		}else{
 			Scanner scanner = new Scanner(file);
 			// scanning token by token
 			while (scanner.hasNext()){
-				String  token = scanner.next();
+				String token = scanner.next();
 				if (isValidWord(token)){
 					countWord(token);
 				}
@@ -51,11 +51,9 @@ public class WordCounter{
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
 		System.out.println("Saving word counts to file:" + output.getAbsolutePath());
-		System.out.println("Total words:" + wordCounts.keySet().size());
+		//  Removed total word count, since we need how many files have that word.
 		
-		if (!output.exists()){
-			output.createNewFile();
-			if (output.canWrite()){
+		if (!output.exists() || output.canWrite()) { // changed conditional so that we dont need to create a new file when output exists.
 				PrintWriter fileOutput = new PrintWriter(output);
 				
 				Set<String> keys = wordCounts.keySet();
@@ -71,9 +69,9 @@ public class WordCounter{
 				}
 				
 				fileOutput.close();
-			}
-		}else{
-			System.out.println("Error: the output file already exists: " + output.getAbsolutePath());
+
+		} else  {
+			System.out.println("Error: the output file already exists: ");
 		}
 		
 	}
@@ -87,13 +85,12 @@ public class WordCounter{
 		}
 		
 		File dataDir = new File(args[0]);
-		File outFile = new File(args[1]);		
-		
+		// removed second file object
 		WordCounter wordCounter = new WordCounter();
-		System.out.println("Hello");
+		System.out.println("File: " + dataDir);
 		try{
 			wordCounter.parseFile(dataDir);
-			wordCounter.outputWordCount(2, outFile);
+			wordCounter.outputWordCount(2, new File(args[1])); //outputs for dataDir
 		}catch(FileNotFoundException e){
 			System.err.println("Invalid input dir: " + dataDir.getAbsolutePath());
 			e.printStackTrace();
