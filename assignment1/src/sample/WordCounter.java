@@ -6,14 +6,14 @@ import java.util.*;
 public class WordCounter{
 	
 	private Map<String, Integer> wordCounts;
-	List<String> arr = new ArrayList<>(); 
+	List<String> arr = new ArrayList<>();  
 	
 	public WordCounter(){
 		wordCounts = new TreeMap<>();
 	}
 	
 	public void parseFile(File file) throws IOException{
-		System.out.println("Starting parsing the file:" + file.getAbsolutePath());
+		//System.out.println("Starting parsing the file:" + file.getAbsolutePath());
 		arr.clear();
 		
 		if(file.isDirectory()){
@@ -35,14 +35,14 @@ public class WordCounter{
 		
 	}
 	
-	private boolean isValidWord(String word){
+	public boolean isValidWord(String word){
 		String allLetters = "^[a-zA-Z]+$";
 		// returns true if the word is composed by only letters otherwise returns false;
 		return word.matches(allLetters);
 			
 	}
 	
-	private void countWord(String word){
+	public void countWord(String word){
 		if (arr.contains(word))
 		{
 			return;
@@ -58,15 +58,15 @@ public class WordCounter{
 	}
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
-		System.out.println("Saving word counts to file:" + output.getAbsolutePath());
-		System.out.println("Total words:" + wordCounts.keySet().size());
-		System.out.println(arr);
+		System.out.println("Saving file to word occurrance counts to file:" + output.getAbsolutePath());
 		
 		if (!output.exists()){
 			output.createNewFile();
 		}
 		if (output.canWrite()){
-				PrintWriter fileOutput = new PrintWriter(output);
+				FileWriter fr = new FileWriter(output, true);
+				BufferedWriter br = new BufferedWriter(fr);
+				PrintWriter fileOutput = new PrintWriter(br);
 				
 				Set<String> keys = wordCounts.keySet();
 				Iterator<String> keyIterator = keys.iterator();
@@ -81,6 +81,8 @@ public class WordCounter{
 				}
 				
 				fileOutput.close();
+				br.close();
+				fr.close();
 			}
 		
 	}
@@ -103,6 +105,7 @@ public class WordCounter{
 		System.out.println("Hello");
 		try{
 			wordCounter.parseFile(dataDirHam1);
+			wordCounter.parseFile(dataDirHam2);
 			wordCounter.outputWordCount(2, outFileHam);
 		}catch(FileNotFoundException e){
 			System.err.println("Invalid input dir: " + dataDirHam1.getAbsolutePath());
@@ -111,20 +114,7 @@ public class WordCounter{
 			e.printStackTrace();
 		}
 
-		WordCounter wordCounter2 = new WordCounter();
-		System.out.println("Hello");
-		try{
-			wordCounter2.parseFile(dataDirHam2);
-			wordCounter2.outputWordCount(2, outFileHam);
-		}catch(FileNotFoundException e){
-			System.err.println("Invalid input dir: " + dataDirHam2.getAbsolutePath());
-			e.printStackTrace();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-
 		WordCounter wordCounter3 = new WordCounter();
-		System.out.println("Hello");
 		try{
 			wordCounter3.parseFile(dataDirSpam);
 			wordCounter3.outputWordCount(2, outFileSpam);
@@ -134,8 +124,6 @@ public class WordCounter{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 }

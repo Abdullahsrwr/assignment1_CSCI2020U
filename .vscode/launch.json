@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch TreeMapFreq",
+            "request": "launch",
+            "mainClass": "sample.TreeMapFreq",
+            "projectName": "assignment1_CSCI2020U_d12b627"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"
@@ -23,7 +30,13 @@
             "request": "launch",
             "mainClass": "sample.WordCounter",
             "projectName": "assignment1_CSCI2020U_d12b627",
-            "args": ["data/train/ham","data/train/ham2", "outputHam.txt", "data/train/spam","outputSpam.txt"]
+            "args": [
+                "data/train/ham",
+                "data/train/ham2",
+                "outputHam.txt",
+                "data/train/spam",
+                "outputSpam.txt"
+            ]
         }
     ]
 }
