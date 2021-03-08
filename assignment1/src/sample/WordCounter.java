@@ -6,8 +6,7 @@ import java.util.*;
 public class WordCounter{
 	
 	private Map<String, Integer> wordCounts;
-	List<String> arr = new ArrayList<>();
-	int totalFiles = 0; 
+	List<String> arr = new ArrayList<>();  
 	
 	public WordCounter(){
 		wordCounts = new TreeMap<>();
@@ -16,7 +15,6 @@ public class WordCounter{
 	public void parseFile(File file) throws IOException{
 		//System.out.println("Starting parsing the file:" + file.getAbsolutePath());
 		arr.clear();
-		totalFiles++;
 		
 		if(file.isDirectory()){
 			//parse each file inside the directory
@@ -61,13 +59,14 @@ public class WordCounter{
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
 		System.out.println("Saving file to word occurrance counts to file:" + output.getAbsolutePath());
-		System.out.println("Total files:" + totalFiles);
 		
 		if (!output.exists()){
 			output.createNewFile();
 		}
 		if (output.canWrite()){
-				PrintWriter fileOutput = new PrintWriter(output);
+				FileWriter fr = new FileWriter(output, true);
+				BufferedWriter br = new BufferedWriter(fr);
+				PrintWriter fileOutput = new PrintWriter(br);
 				
 				Set<String> keys = wordCounts.keySet();
 				Iterator<String> keyIterator = keys.iterator();
@@ -82,6 +81,8 @@ public class WordCounter{
 				}
 				
 				fileOutput.close();
+				br.close();
+				fr.close();
 			}
 		
 	}
@@ -104,20 +105,10 @@ public class WordCounter{
 		System.out.println("Hello");
 		try{
 			wordCounter.parseFile(dataDirHam1);
+			wordCounter.parseFile(dataDirHam2);
 			wordCounter.outputWordCount(2, outFileHam);
 		}catch(FileNotFoundException e){
 			System.err.println("Invalid input dir: " + dataDirHam1.getAbsolutePath());
-			e.printStackTrace();
-		}catch(IOException e){
-			e.printStackTrace();
-		}
-
-		WordCounter wordCounter2 = new WordCounter();
-		try{
-			wordCounter2.parseFile(dataDirHam2);
-			wordCounter2.outputWordCount(2, outFileHam);
-		}catch(FileNotFoundException e){
-			System.err.println("Invalid input dir: " + dataDirHam2.getAbsolutePath());
 			e.printStackTrace();
 		}catch(IOException e){
 			e.printStackTrace();
@@ -133,8 +124,6 @@ public class WordCounter{
 		}catch(IOException e){
 			e.printStackTrace();
 		}
-		
-		
 	}
 	
 }
