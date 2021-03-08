@@ -58,8 +58,6 @@ public class WordCounter{
 	}
 	
 	public void outputWordCount(int minCount, File output) throws IOException{
-		System.out.println("Saving file to word occurrance counts to file:" + output.getAbsolutePath());
-		
 		if (!output.exists()){
 			output.createNewFile();
 		}

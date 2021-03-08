@@ -104,7 +104,7 @@ public class TreeMapFreq {
     	}
 
 
-		TreeMap<String, Double> testing = new TreeMap<String, Double>();			
+		TreeMap<String, Double> testingHam = new TreeMap<String, Double>();			
 		File directoryPath = new File("data/test/ham");
         //List of all files and directories
         File filesList[] = directoryPath.listFiles();
@@ -140,8 +140,8 @@ public class TreeMapFreq {
 					}
 					line = reader3.readLine();
 				}
-				prob = 1/1+Math.pow(Math.E,n);
-				testing.put(file.getName(),prob);
+				prob = 1/(1+Math.pow(Math.E,n));
+				testingHam.put(file.getName(),prob);
 				//System.out.println(testing);
 				reader3.close();
 			} 
@@ -150,12 +150,62 @@ public class TreeMapFreq {
 				e.printStackTrace();
 			}
 		}
-		/*System.out.println(trainHamFreq);
-		System.out.println(trainSpamFreq);
-		System.out.println(probHam);
-		System.out.println(probSpam);
-		System.out.println(spamWord);*/
-		System.out.println(testing);
+
+		TreeMap<String, Double> testingSpam = new TreeMap<String, Double>();			
+		File directoryPath2 = new File("data/test/spam");
+        //List of all files and directories
+        File filesList2[] = directoryPath2.listFiles();
+      	for(File file : filesList2) {
+			BufferedReader reader4;
+			try 
+			{
+				reader4 = new BufferedReader(new FileReader(file.getAbsolutePath()));
+				String var4 = "";
+				String line = reader4.readLine();
+				double n = 0;
+				double prob = 0;
+				while (line != null) 
+				{
+					//System.out.println(line);
+					var4 = reader4.readLine();
+					if (var4 != null)
+					{
+						String[] words = var4.split(" ");
+						for (int i = 0; i < words.length; i++) 
+						{
+							String word = words[i];
+							//System.out.println(word);
+							WordCounter checker = new WordCounter();
+							if (checker.isValidWord(word))
+							{
+								if (spamWord.containsKey(word))
+								{
+									n += ((Math.log(1-(double)spamWord.get(word))) - (Math.log((double)spamWord.get(word))));
+								}
+							}
+						}
+					}
+					line = reader4.readLine();
+				}
+				prob = 1/(1+Math.pow(Math.E,n));
+				testingSpam.put(file.getName(),prob);
+				//System.out.println(testing);
+				reader4.close();
+			} 
+			catch (IOException e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+
+		//System.out.println(trainHamFreq);
+		//System.out.println(trainSpamFreq);
+		//System.out.println(probHam);
+		//System.out.println(probSpam);
+		//System.out.println(spamWord);
+		//System.out.println(testingHam);
+		//System.out.println(testingSpam);
 		
 		
     } 
