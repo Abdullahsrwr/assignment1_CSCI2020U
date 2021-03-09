@@ -10,8 +10,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import java.io.File;
@@ -26,6 +28,8 @@ import java.lang.Math;
 import java.io.FileNotFoundException;
 import java.text.DecimalFormat;
 
+import static javafx.scene.paint.Color.*;
+
 
 public class Main extends Application {
 
@@ -34,9 +38,10 @@ public class Main extends Application {
     double numTruePositives = 0;
     double numFalsePositives = 0;
     double numTrueNegatives = 0;
+	private Background RED;
 
 
-    @Override
+	@Override
     public void start(Stage primaryStage) throws Exception{
         
         // Implement directory picker to let the user navigate to data folder
@@ -292,17 +297,20 @@ public class Main extends Application {
         // Create table columnns
         TableColumn<TestFile, String> fileColumn;
         fileColumn = new TableColumn<>("File");
-        fileColumn.setMinWidth(350);
+        fileColumn.setMinWidth(400);
+		fileColumn.setStyle("-fx-text-fill: black; -fx-background-color: grey;-fx-font-size: 16px;");
         fileColumn.setCellValueFactory(new PropertyValueFactory<>("Filename"));
 
         TableColumn<TestFile,String> classColumn;
         classColumn = new TableColumn<>("Actual Class");
-        classColumn.setMinWidth(200);
+        classColumn.setMinWidth(150);
+		classColumn.setStyle("-fx-text-fill: black; -fx-background-color: silver;-fx-font-size: 16px;");
         classColumn.setCellValueFactory(new PropertyValueFactory<>("ActualClass"));
 
         TableColumn<TestFile,String> spamColumn;
         spamColumn = new TableColumn<>("Spam Probability");
         spamColumn.setMinWidth(300);
+		spamColumn.setStyle("-fx-text-fill: black; -fx-background-color: grey;-fx-font-size: 16px;");
         spamColumn.setCellValueFactory(new PropertyValueFactory<>("SpamProbability"));
 
         // Table Columns
@@ -315,6 +323,7 @@ public class Main extends Application {
         editArea.setPadding(new Insets(10, 10, 10, 10));
         editArea.setVgap(10);
         editArea.setHgap(10);
+        editArea.setStyle("-fx-text-fill: black; -fx-background-color: dimgrey;-fx-font-size: 16px;");
 
         // Calculate Acc and Precision
         double truePositives = 0;
@@ -353,6 +362,8 @@ public class Main extends Application {
         TextField accField = new TextField();
         accField.setEditable(false);
         accField.setText(repAcc);
+        accField.setStyle("-fx-text-fill: black; -fx-background-color: silver; -fx-font-size: 16px;");
+		accLabel.setStyle("-fx-text-fill: black;  -fx-font-size: 16px; fx-font-weight: bold; ");
         editArea.add(accField, 1, 0);
 
         Label precLabel = new Label("Precision");
@@ -360,14 +371,16 @@ public class Main extends Application {
         TextField precField = new TextField();
         precField.setEditable(false);
         precField.setText(repPrec);
+        precField.setStyle("-fx-text-fill: black; -fx-background-color: silver; -fx-font-size: 16px;");
+		precLabel.setStyle("-fx-text-fill: black; -fx-font-size: 16px; fx-font-weight: bold; ");
         editArea.add(precField, 1, 1);
 
         // Components in UI
         layout = new BorderPane();
         layout.setCenter(testTable);
         layout.setBottom(editArea);
-        Scene scene = new Scene(layout, 800, 600);
-        primaryStage.setTitle("Spam Master 3000");
+        Scene scene = new Scene(layout, 865, 600);
+        primaryStage.setTitle("Spam Detection");
         primaryStage.setScene(scene);
         primaryStage.show();
     }
