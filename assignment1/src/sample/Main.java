@@ -41,6 +41,11 @@ public class Main extends Application {
 	private Background RED;
 
 
+	
+	/** 
+	 * @param primaryStage
+	 * @throws Exception
+	 */
 	@Override
     public void start(Stage primaryStage) throws Exception{
         
@@ -384,7 +389,11 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-    public static void main(String[] args) {
+    
+	/** 
+	 * @param args
+	 */
+	public static void main(String[] args) {
         launch(args);
     }
 }

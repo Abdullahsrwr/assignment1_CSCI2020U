@@ -12,6 +12,11 @@ public class WordCounter{
 		wordCounts = new TreeMap<>();
 	}
 	
+	
+	/** 
+	 * @param file
+	 * @throws IOException
+	 */
 	public void parseFile(File file) throws IOException{
 		//System.out.println("Starting parsing the file:" + file.getAbsolutePath());
 		arr.clear();
@@ -35,6 +40,11 @@ public class WordCounter{
 		
 	}
 	
+	
+	/** 
+	 * @param word
+	 * @return boolean
+	 */
 	public boolean isValidWord(String word){
 		String allLetters = "^[a-zA-Z]+$";
 		// returns true if the word is composed by only letters otherwise returns false;
@@ -42,6 +52,10 @@ public class WordCounter{
 			
 	}
 	
+	
+	/** 
+	 * @param word
+	 */
 	public void countWord(String word){
 		if (arr.contains(word))
 		{
@@ -57,6 +71,12 @@ public class WordCounter{
 		}
 	}
 	
+	
+	/** 
+	 * @param minCount
+	 * @param output
+	 * @throws IOException
+	 */
 	public void outputWordCount(int minCount, File output) throws IOException{
 		if (!output.exists()){
 			output.createNewFile();
@@ -85,6 +105,10 @@ public class WordCounter{
 		
 	}
 	
+	
+	/** 
+	 * @param args
+	 */
 	//main method
 	public static void main(String[] args) {
 		
