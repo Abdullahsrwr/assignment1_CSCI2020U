@@ -22,7 +22,9 @@ ham. Based off of the training files, the program generates results for inputted
 
 spam probability, accuracy, and precision. The spam probability is the extent to which spam is probable. The accuracy is the quality of correctness. Furthermore,
 
-the precision is the fact of being exact. 
+the precision is the fact of being exact.  The following image is this expected
+
+![Expected Output](https://user-images.githubusercontent.com/59875684/110400556-d172ea00-8045-11eb-9745-0f7490f55e2c.png)
 
 **Improvements**
 =====================
