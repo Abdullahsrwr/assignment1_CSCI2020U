@@ -17,11 +17,8 @@ Mariana Shimabukuro
 =====================
 
 The purpose of this project was to create spam detection software. The program has files to train itself based on what types of files are more likely to be spam or
-
 ham. Based off of the training files, the program generates results for inputted test files, either spam or ham. Alongside the results, the programs outputs the 
-
 spam probability, accuracy, and precision. The spam probability is the extent to which spam is probable. The accuracy is the quality of correctness. Furthermore,
-
 the precision is the fact of being exact.  The following image is this expected
 
 ![Expected Output](https://user-images.githubusercontent.com/59875684/110400556-d172ea00-8045-11eb-9745-0f7490f55e2c.png)
@@ -30,7 +27,6 @@ the precision is the fact of being exact.  The following image is this expected
 =====================
 
 In addition to the base requirements for the software, a few improvements were added. When the user is prompted to input a file, a file explorer pops up for ease 
-
 of use. As well, the aesthetics were improved to allow for a user friendly experience.
 
 **Instructions**
